@@ -4,19 +4,62 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: "Source Sans Pro", sans-serif;
+    height: 100%;
+    letter-spacing: 0.015em;
 }
 
-body {
-    width: 100%;
+#react-mount {
     height: 100%;
 }
 
+input {
+    border: 2px solid white;
+    padding: 0.75em 0.9em;
+    border-radius: 0.2em;
+    color: #704753;
+}
+
 .app {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     padding: 1em;
 }
 
-.invalid {
-    input {
-        background: #ffc1b0;
+.validate-component {
+    &.invalid {
+        * {
+            background: #ff9090;
+            border: 2px solid red;
+        }
+    }
+}
+
+.outer-validate-group {
+    padding: 2em;
+    background: #ffee90;
+    border-radius: 4em;
+
+    transition: 0.5s ease-in-out background;
+
+    &.valid {
+        background: #94ebaa;
+    }
+}
+
+.validate-group {
+    padding: 2em;
+    margin-top: 1em;
+    border-radius: 2em;
+    background: #f9f0f3;
+
+    transition: background 0.5s ease-in-out;
+
+    &.valid {
+        background: #45cb87;
     }
 }

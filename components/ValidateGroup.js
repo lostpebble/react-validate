@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import Validate from './Validate';
 
+import uniqueId from 'lodash/uniqueId';
+
 export default class ValidateGroup extends Component {
 
 	constructor(props) {
@@ -11,12 +13,21 @@ export default class ValidateGroup extends Component {
 		this.state = {
 			valid: null,
 			validStates: new Map(),
+			id: props.id.length ? props.id : uniqueId('inptval_'),
 		};
 
 		this.validChangeInGroup = ::this.validChangeInGroup;
 		this.checkValidation = ::this.checkValidation;
 		this.validatorLeaveGroup = ::this.validatorLeaveGroup;
 		this.validationTimeout = null;
+	}
+
+	componentWillMount() {
+		if (this.props.validChangeInGroup) this.props.validChangeInGroup(false, this.state.id);
+	}
+
+	componentWillUnmount() {
+		if (this.props.validatorLeaveGroup) this.props.validatorLeaveGroup();
 	}
 
 	checkValidation() {
@@ -37,6 +48,7 @@ export default class ValidateGroup extends Component {
 			});
 
 			if (this.props.validChange) this.props.validChange(validState);
+			if (this.props.validChangeInGroup) this.props.validChangeInGroup(validState, this.state.id);
 		}
 	}
 
@@ -61,9 +73,7 @@ export default class ValidateGroup extends Component {
 	render() {
 		const baseProps = {};
 
-		if (this.props.impatientError != null) {
-			baseProps.impatientError = this.props.impatientError;
-		}
+		if (this.props.impatientError != null) baseProps.impatientError = this.props.impatientError;
 
 		const newChildren = React.Children.map(this.props.children, (child) => {
 			if (child && (child.type === Validate || child.type === ValidateGroup)) {
@@ -74,7 +84,7 @@ export default class ValidateGroup extends Component {
 		});
 
 		return (
-			<div>{newChildren}</div>
+			<div className={`${this.props.className} ${this.state.valid ? "valid" : "invalid"}`}>{newChildren}</div>
 		);
 	}
 }
@@ -82,6 +92,8 @@ export default class ValidateGroup extends Component {
 ValidateGroup.propTypes = {
 	impatientError: PropTypes.bool,
 	validChange: PropTypes.func,
+	className: PropTypes.string,
+	id: PropTypes.string,
 	children: PropTypes.oneOfType([
 		PropTypes.element,
 		PropTypes.arrayOf(PropTypes.element),
@@ -89,5 +101,7 @@ ValidateGroup.propTypes = {
 };
 
 ValidateGroup.defaultProps = {
+	id: "",
 	impatientError: null,
+	className: "validate-group",
 };

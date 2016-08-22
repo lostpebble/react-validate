@@ -10,12 +10,17 @@ export default class Validate extends Component {
 		this.state = {
 			uncontrolled: true,
 			childValue: props.defaultValue,
-			isInvalid: false,
+			validity: null,
+			showError: false,
 			id: props.id.length ? props.id : uniqueId('inptval_'),
 		};
 
 		this.onBlur = ::this.onBlur;
 		this.onValueChange = ::this.onValueChange;
+
+		// variable outside of setState to
+		// trustfully hold most recent state
+		this.recentChange = null;
 	}
 
 	componentWillMount() {
@@ -35,12 +40,10 @@ export default class Validate extends Component {
 	componentWillReceiveProps(nextProps) {
 		// extreme edge case, if the user is setting the value of the component
 		// from outside the component (eg. not using onChange) maybe from a date-picker?...
-		if (!this.state.uncontrolled && !nextProps.children.props[this.props.onChangeProp]) {
-			console.dir(nextProps);
-			console.log(nextProps.children.props[this.props.onChangeProp]);
-
-			// console.log("checking props");
-			// this._checkValidation(nextProps.children.props[this.props.valueProp], !this.state.isInvalid ? !this.props.impatientError : true);
+		if (!this.state.uncontrolled) {
+			if (nextProps.children.props[this.props.valueProp] !== this.recentChange) {
+				this._checkValidation(nextProps.children.props[this.props.valueProp], !this.state.showError ? !this.props.impatientError : false);
+			}
 		}
 	}
 
@@ -53,14 +56,14 @@ export default class Validate extends Component {
 			childValue: event.target.value,
 		});
 
-		this._checkValidation(event.target.value, !this.state.isInvalid ? !this.props.impatientError : false);
+		this._checkValidation(event.target.value, !this.state.showError ? !this.props.impatientError : false);
 	}
 
 	onBlur() {
 		this._checkValidation(this.state.uncontrolled ? this.state.childValue : this.props.children.props[this.props.valueProp]);
 	}
 
-	interceptChange(originalOnChange) {
+	_interceptChange(originalOnChange) {
 		return (changeEvent) => {
 			if (typeof originalOnChange === 'function') {
 				originalOnChange(changeEvent);
@@ -70,35 +73,42 @@ export default class Validate extends Component {
 		};
 	}
 
-	_checkValidation(value, patient) {
-		let validState = true;
+	_checkValidation(value, patientError) {
+		let newValidity = true;
 
-		// validation check
+		this.recentChange = value;
+
 		if (this.props.validators.some((validator) => !validator(value))) {
-			validState = false;
+			newValidity = false;
 		}
 
-		if (!patient) {
-			this.setState({
-				isInvalid: !validState,
-			});
+		const state = {};
+
+		if (!patientError) {
+			state.showError = !newValidity;
 		}
 
-		if (this.props.validChange) { this.props.validChange(validState); }
-		if (this.props.validChangeInGroup) { this.props.validChangeInGroup(validState, this.state.id); }
+		if (this.state.validity !== newValidity) {
+			state.validity = newValidity;
+
+			if (this.props.validChange) { this.props.validChange(newValidity); }
+			if (this.props.validChangeInGroup) { this.props.validChangeInGroup(newValidity, this.state.id); }
+		}
+
+		this.setState(state);
 	}
 
 	render() {
 		const child = React.Children.only(this.props.children);
 
 		const baseProps = {};
-		if (this.props.passError) baseProps[this.props.errorTextProp] = this.state.isInvalid ? this.props.errorText : "";
-		if (this.props.showErrorProp.length) baseProps[this.props.showErrorProp] = this.state.isInvalid;
+		if (this.props.passError) baseProps[this.props.errorTextProp] = this.state.showError ? this.props.errorText : "";
+		if (this.props.showErrorProp.length) baseProps[this.props.showErrorProp] = this.state.showError;
 		if (this.state.uncontrolled) {
 			baseProps[this.props.onChangeProp] = this.onValueChange;
 			baseProps.value = this.state.childValue;
 		} else {
-			baseProps[this.props.onChangeProp] = this.interceptChange(child.props[this.props.onChangeProp]);
+			baseProps[this.props.onChangeProp] = this._interceptChange(child.props[this.props.onChangeProp]);
 		}
 
 		const newChildProps = Object.assign(baseProps, {
@@ -108,14 +118,8 @@ export default class Validate extends Component {
 
 		const childWithProps = React.cloneElement(child, newChildProps);
 
-		let className = "validate-component";
-		const typeofClassName = typeof this.props.className;
-		if (typeofClassName === 'string' || typeofClassName === 'number') {
-			className = this.props.className;
-		}
-
 		return (
-			<div className={`${className} ${this.state.isInvalid ? "invalid" : "valid"}`}>{childWithProps}</div>
+			<div className={`${this.props.className} ${this.state.showError ? "invalid" : "valid"}`}>{childWithProps}</div>
 		);
 	}
 }
@@ -145,4 +149,5 @@ Validate.defaultProps = {
 	id: "",
 	passError: false,
 	impatientError: false,
+	className: "validate-component",
 };

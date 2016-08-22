@@ -12,17 +12,33 @@ export default class App extends Component {
 		this.state = {
 			inputValue: "",
 			groupValid: false,
+			group2Valid: false,
+			outerGroupValid: false,
 		};
 
 		// Short-hand for binding functions to their own (this) context.
 		// Requires Babel and preset-state-0
 		this.changeInputValue = ::this.changeInputValue;
 		this.setGroupValid = ::this.setGroupValid;
+		this.setGroup2Valid = ::this.setGroup2Valid;
+		this.setOuterGroupValid = ::this.setOuterGroupValid;
 	}
 
 	setGroupValid(value) {
 		this.setState({
 			groupValid: value,
+		});
+	}
+
+	setGroup2Valid(value) {
+		this.setState({
+			group2Valid: value,
+		});
+	}
+
+	setOuterGroupValid(value) {
+		this.setState({
+			outerGroupValid: value,
 		});
 	}
 
@@ -38,16 +54,30 @@ export default class App extends Component {
 		return (
 			<div className="app">
 				<h1>React-Validate</h1>
-				<div>This group below is {this.state.groupValid ? "VALID" : "INVALID"}</div>
-				<ValidateGroup validChange={this.setGroupValid}>
-					<h3>Email</h3>
-					<Validate validators={[validator.isEmail]} impatientError>
-						<input type="text"/>
-					</Validate>
-					<h3>Password</h3>
-					<Validate validators={[validateLength]}>
-						<input value={this.state.inputValue} onChange={this.changeInputValue}/>
-					</Validate>
+				<ValidateGroup className="outer-validate-group" validChange={this.setOuterGroupValid}>
+					<div>These groups together are {this.state.outerGroupValid ? "VALID" : "INVALID"}</div>
+					<ValidateGroup validChange={this.setGroupValid}>
+						<div>This group is {this.state.groupValid ? "VALID" : "INVALID"}</div>
+						<h3>Email</h3>
+						<Validate validators={[validator.isEmail]} impatientError>
+							<input type="text" value={this.state.inputValue} onChange={this.changeInputValue}/>
+						</Validate>
+						<h3>Password</h3>
+						<Validate validators={[validateLength]}>
+							<input type="password"/>
+						</Validate>
+					</ValidateGroup>
+					<ValidateGroup validChange={this.setGroup2Valid}>
+						<div>This group is {this.state.group2Valid ? "VALID" : "INVALID"}</div>
+						<h3>Email</h3>
+						<Validate validators={[validator.isEmail]} impatientError>
+							<input type="text" value={this.state.inputValue} onChange={this.changeInputValue}/>
+						</Validate>
+						<h3>Password</h3>
+						<Validate validators={[validateLength]}>
+							<input type="password"/>
+						</Validate>
+					</ValidateGroup>
 				</ValidateGroup>
 			</div>
 		);
