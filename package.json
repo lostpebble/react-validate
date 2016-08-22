@@ -1,0 +1,23 @@
+{
+  "name": "react-validate",
+  "version": "1.0.0",
+  "description": "A simple, adaptable validation wrapper component. Small footprint, easy to use and to the point.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lostpebble/react-validate.git"
+  },
+  "keywords": [
+    "validation",
+    "react"
+  ],
+  "author": "Paul Myburgh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lostpebble/react-validate/issues"
+  },
+  "homepage": "https://github.com/lostpebble/react-validate#readme"
+}
