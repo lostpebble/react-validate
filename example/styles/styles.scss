@@ -31,7 +31,7 @@ input {
 }
 
 .validate-component {
-    &.invalid {
+    &.error {
         * {
             background: #ff9090;
             border: 2px solid red;

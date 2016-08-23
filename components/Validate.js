@@ -34,7 +34,7 @@ export default class Validate extends Component {
 		this._checkValidation(
 			this.state.uncontrolled ?
 				this.state.childValue : this.props.children.props[this.props.valueProp],
-			!this.props.impatientError);
+			!(this.props.feedbackOnMount || this.props.impatientError));
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -86,12 +86,13 @@ export default class Validate extends Component {
 
 		if (!patientError) {
 			state.showError = !newValidity;
+			if (this.props.onErrorChange) { this.props.onErrorChange(!newValidity); }
 		}
 
 		if (this.state.validity !== newValidity) {
 			state.validity = newValidity;
 
-			if (this.props.validChange) { this.props.validChange(newValidity); }
+			if (this.props.onValidChange) { this.props.onValidChange(newValidity); }
 			if (this.props.validChangeInGroup) { this.props.validChangeInGroup(newValidity, this.state.id); }
 		}
 
@@ -119,7 +120,7 @@ export default class Validate extends Component {
 		const childWithProps = React.cloneElement(child, newChildProps);
 
 		return (
-			<div className={`${this.props.className} ${this.state.showError ? "invalid" : "valid"}`}>{childWithProps}</div>
+			<div className={`${this.props.className} ${this.state.validity ? "valid" : "invalid"} ${this.state.showError ? "error" : ""}`}>{childWithProps}</div>
 		);
 	}
 }
@@ -127,27 +128,32 @@ export default class Validate extends Component {
 Validate.propTypes = {
 	children: PropTypes.element.isRequired,
 	validators: PropTypes.array.isRequired,
+	targetValue: PropTypes.array,
 	defaultValue: PropTypes.string,
-	errorText: PropTypes.string,
-	id: PropTypes.string,
-	className: PropTypes.string,
 	errorTextProp: PropTypes.string,
+	errorText: PropTypes.string,
+	className: PropTypes.string,
 	showErrorProp: PropTypes.string,
 	valueProp: PropTypes.string,
 	onChangeProp: PropTypes.string,
-	validChange: PropTypes.func,
+	onValidChange: PropTypes.func,
+	onErrorChange: PropTypes.func,
 	passError: PropTypes.bool,
 	impatientError: PropTypes.bool,
+	feedbackOnMount: PropTypes.bool,
 };
 
 Validate.defaultProps = {
 	defaultValue: "",
+	targetValue: ["target", "value"],
 	errorTextProp: "errorText",
 	showErrorProp: "",
 	valueProp: "value",
 	onChangeProp: "onChange",
 	id: "",
+	validators: [],
 	passError: false,
 	impatientError: false,
+	feedbackOnMount: false,
 	className: "validate-component",
 };

@@ -1,5 +1,6 @@
 {
   "presets": [
+    "react-hmre",
     "./tools/es2015Preset",
     "stage-0",
     "react"

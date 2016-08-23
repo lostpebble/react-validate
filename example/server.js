@@ -8,6 +8,7 @@ const app = express();
 
 app.use(webpackDevMiddleware(compiler, {
 	publicPath: '/__build__/',
+	noInfo: true,
 	stats: {
 		colors: true,
 	},

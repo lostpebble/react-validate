@@ -59,18 +59,18 @@ export default class App extends Component {
 					<ValidateGroup validChange={this.setGroupValid}>
 						<div>This group is {this.state.groupValid ? "VALID" : "INVALID"}</div>
 						<h3>Email</h3>
-						<Validate validators={[validator.isEmail]} impatientError>
+						<Validate validators={[validator.isEmail]} feedbackOnMount>
 							<input type="text" value={this.state.inputValue} onChange={this.changeInputValue}/>
 						</Validate>
 						<h3>Password</h3>
-						<Validate validators={[validateLength]}>
+						<Validate validators={[validateLength]} >
 							<input type="password"/>
 						</Validate>
 					</ValidateGroup>
 					<ValidateGroup validChange={this.setGroup2Valid}>
 						<div>This group is {this.state.group2Valid ? "VALID" : "INVALID"}</div>
 						<h3>Email</h3>
-						<Validate validators={[validator.isEmail]} impatientError>
+						<Validate>
 							<input type="text" value={this.state.inputValue} onChange={this.changeInputValue}/>
 						</Validate>
 						<h3>Password</h3>

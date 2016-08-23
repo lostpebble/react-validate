@@ -3,6 +3,9 @@ import { render } from 'react-dom';
 
 import App from './src/App';
 
+// needed for material-ui examples
+require('react-tap-event-plugin')();
+
 require('./styles/styles.scss');
 
 render((<App/>), document.getElementById('react-mount'));
@@ -12,10 +15,10 @@ if (module.hot) {
 	module.hot.accept('./src/App.js', () => {
 		console.log("Re-rendering");
 
-		const NewApp = require('./src/App').default;
+		// const NewApp = require('./src/App').default;
 
 		render(
-			<NewApp/>,
+			<App/>,
 			document.getElementById('react-mount')
 		);
 	});
