@@ -4,6 +4,10 @@ import { Validate, ValidateGroup } from '../../components/index';
 import validator from 'validator';
 import bind from 'lodash/bind';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import TextField from 'material-ui/TextField';
+
 export default class App extends Component {
 
 	constructor(props) {
@@ -48,38 +52,44 @@ export default class App extends Component {
 		});
 	}
 
+	onValidateError(value, errorMessage, uniqueId) {
+		console.log(`${uniqueId} error change to ${value} with message : ${errorMessage}`);
+	}
+
 	render() {
 		const validateLength = bind(validator.isLength, null, bind.placeholder, { min: 6 });
 
 		return (
-			<div className="app">
-				<h1>React-Validate</h1>
-				<ValidateGroup className="outer-validate-group" validChange={this.setOuterGroupValid}>
-					<div>These groups together are {this.state.outerGroupValid ? "VALID" : "INVALID"}</div>
-					<ValidateGroup validChange={this.setGroupValid}>
-						<div>This group is {this.state.groupValid ? "VALID" : "INVALID"}</div>
-						<h3>Email</h3>
-						<Validate validators={[validator.isEmail]} feedbackOnMount>
-							<input type="text" value={this.state.inputValue} onChange={this.changeInputValue}/>
-						</Validate>
-						<h3>Password</h3>
-						<Validate validators={[validateLength]} >
-							<input type="password"/>
-						</Validate>
-					</ValidateGroup>
-					<ValidateGroup validChange={this.setGroup2Valid}>
-						<div>This group is {this.state.group2Valid ? "VALID" : "INVALID"}</div>
-						<h3>Email</h3>
-						<Validate>
-							<input type="text" value={this.state.inputValue} onChange={this.changeInputValue}/>
-						</Validate>
-						<h3>Password</h3>
-						<Validate validators={[validateLength]}>
-							<input type="password"/>
-						</Validate>
-					</ValidateGroup>
-				</ValidateGroup>
-			</div>
+			<MuiThemeProvider muiTheme={getMuiTheme()}>
+				<div className="app">
+						<h1>React-Validate</h1>
+						<ValidateGroup className="outer-validate-group" validChange={this.setOuterGroupValid}>
+							<div>These groups together are {this.state.outerGroupValid ? "VALID" : "INVALID"}</div>
+							<ValidateGroup validChange={this.setGroupValid}>
+								<div>This group is {this.state.groupValid ? "VALID" : "INVALID"}</div>
+								<h3>Email</h3>
+								<Validate onErrorChange={this.onValidateError} validators={[validator.isEmail]} feedbackOnMount>
+									<input className="normal-input" type="text" value={this.state.inputValue} onChange={this.changeInputValue}/>
+								</Validate>
+								<h3>Password</h3>
+								<Validate onErrorChange={this.onValidateError} validators={[validateLength]} errorText="Password not long enough" passError>
+									<TextField type="password" />
+								</Validate>
+							</ValidateGroup>
+							<ValidateGroup validChange={this.setGroup2Valid}>
+								<div>This group is {this.state.group2Valid ? "VALID" : "INVALID"}</div>
+								<h3>Email</h3>
+								<Validate>
+									<input type="text" value={this.state.inputValue} onChange={this.changeInputValue}/>
+								</Validate>
+								<h3>Password</h3>
+								<Validate validators={[validateLength]}>
+									<input type="password"/>
+								</Validate>
+							</ValidateGroup>
+						</ValidateGroup>
+				</div>
+			</MuiThemeProvider>
 		);
 	}
 }

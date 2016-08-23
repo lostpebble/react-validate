@@ -32,7 +32,7 @@ input {
 
 .validate-component {
     &.error {
-        * {
+        .normal-input {
             background: #ff9090;
             border: 2px solid red;
         }
