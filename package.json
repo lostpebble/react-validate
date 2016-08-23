@@ -1,6 +1,6 @@
 {
   "name": "react-validate",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A simple, adaptable validation wrapper component. Small footprint, easy to use and to the point.",
   "files": [
     "*.md",
