@@ -1,6 +1,5 @@
 {
   "presets": [
-    "react-hmre",
     "./tools/es2015Preset",
     "stage-0",
     "react"
@@ -8,7 +7,15 @@
 
   "env": {
     "cjs": {
-      "plugins": ["add-module-exports"]
+      "plugins": ["add-module-exports", "babel-plugin-groundskeeper-willie"]
+    },
+    "es": {
+      "plugins": ["babel-plugin-groundskeeper-willie"]
+    },
+    "dev": {
+      "presets": [
+        "react-hmre"
+      ]
     }
   }
 }

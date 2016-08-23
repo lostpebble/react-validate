@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import uniqueId from 'lodash/uniqueId';
+import { validatorError } from './messages';
 
 export default class Validate extends Component {
 
@@ -12,7 +13,7 @@ export default class Validate extends Component {
 			childValue: props.defaultValue,
 			validity: null,
 			showError: false,
-			id: props.id.length ? props.id : uniqueId('inptval_'),
+			id: this.props.id.length ? this.props.id : uniqueId('inptval_'),
 		};
 
 		this.onBlur = ::this.onBlur;
@@ -34,12 +35,15 @@ export default class Validate extends Component {
 		this._checkValidation(
 			this.state.uncontrolled ?
 				this.state.childValue : this.props.children.props[this.props.propForValue],
-			!(this.props.feedbackOnMount || this.props.impatientError));
+			!(this.props.feedbackOnMount || (this.props.impatientError && this.props.feedbackOnMount)));
 	}
 
 	componentWillReceiveProps(nextProps) {
-		// extreme edge case, if the user is setting the value of the component
-		// from outside the component (eg. not using onChange) maybe from a date-picker?...
+		// If child component is controlled (ie. has a value prop) then this is
+		// where we hook into checking the validation on that component
+		// since when the value changes- this component will receive that change
+		// as new props too. To ensure that we don't make more checks than
+		// necessary we save every change in this.recentChange and check against it
 		if (!this.state.uncontrolled) {
 			if (nextProps.children.props[this.props.propForValue] !== this.recentChange) {
 				this._checkValidation(nextProps.children.props[this.props.propForValue], !this.state.showError ? !this.props.impatientError : false);
@@ -51,14 +55,14 @@ export default class Validate extends Component {
 		if (this.props.validatorLeaveGroup) this.props.validatorLeaveGroup(this.state.id);
 	}
 
-	onValueChange(event) {
-		// console.log(`${this.state.id} is changing`);
-
-		let newValue = event;
+	onValueChange(...args) {
+		let newValue = args[this.props.onChangeValuePosition];
 
 		this.props.onChangeValueKeys.forEach((key) => {
 			newValue = newValue[key];
 		});
+
+		// console.log(`Trying to validate value: ${newValue} on ${this.state.id}`);
 
 		this.setState({
 			childValue: newValue,
@@ -68,16 +72,20 @@ export default class Validate extends Component {
 	}
 
 	onBlur() {
-		this._checkValidation(this.state.uncontrolled ? this.state.childValue : this.props.children.props[this.props.propForValue]);
+		// don't check validation on blur if it's already been
+		// checked impatiently on every change
+		if (!this.props.impatientError) {
+			this._checkValidation(this.state.uncontrolled ? this.state.childValue : this.props.children.props[this.props.propForValue]);
+		}
 	}
 
 	_interceptChange(originalOnChange) {
-		return (changeEvent) => {
+		return (...args) => {
 			if (typeof originalOnChange === 'function') {
-				originalOnChange(changeEvent);
+				originalOnChange(...args);
 			}
 
-			this.onValueChange(changeEvent);
+			this.onValueChange(...args);
 		};
 	}
 
@@ -86,8 +94,13 @@ export default class Validate extends Component {
 
 		this.recentChange = value;
 
-		if (this.props.validators.some((validator) => !validator(value))) {
-			newValidity = false;
+		try {
+			if (this.props.validators.some((validator) => !validator(value))) {
+				newValidity = false;
+			}
+		} catch (e) {
+			console.error(e);
+			console.warn(validatorError(value));
 		}
 
 		const state = {};
@@ -118,11 +131,15 @@ export default class Validate extends Component {
 		if (this.props.passError) baseProps[this.props.propForErrorText] = this.state.showError ? this.props.errorText : "";
 		if (this.props.propForShowError.length) baseProps[this.props.propForShowError] = this.state.showError;
 		if (this.state.uncontrolled) {
-			baseProps[this.props.propForOnChange] = this.onValueChange;
-			baseProps[this.props.propForValue] = this.state.childValue;
-		} else {
 			baseProps[this.props.propForOnChange] = this._interceptChange(child.props[this.props.propForOnChange]);
+			baseProps[this.props.propForValue] = this.state.childValue;
 		}
+
+		/*
+		* else {
+		 baseProps[this.props.propForOnChange] = this._interceptChange(child.props[this.props.propForOnChange]);
+		 }
+		* */
 
 		Object.assign(baseProps, {
 			onBlur: this.onBlur,
@@ -138,7 +155,9 @@ export default class Validate extends Component {
 
 Validate.propTypes = {
 	children: PropTypes.element.isRequired,
+	id: PropTypes.string,
 	validators: PropTypes.array.isRequired,
+	onChangeValuePosition: PropTypes.number,
 	onChangeValueKeys: PropTypes.array,
 	defaultValue: PropTypes.string,
 	errorText: PropTypes.string,
@@ -155,13 +174,14 @@ Validate.propTypes = {
 };
 
 Validate.defaultProps = {
+	id: "",
 	defaultValue: "",
+	onChangeValuePosition: 0,
 	onChangeValueKeys: ["target", "value"],
 	propForShowError: "",
 	propForErrorText: "errorText",
 	propForValue: "value",
 	propForOnChange: "onChange",
-	id: "",
 	validators: [],
 	errorText: "",
 	passError: false,

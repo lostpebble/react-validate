@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Validate, ValidateGroup } from '../../components/index';
+import { Validate, ValidateGroup } from '../../src/index';
 
 import validator from 'validator';
 import bind from 'lodash/bind';
@@ -7,6 +7,8 @@ import bind from 'lodash/bind';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 export default class App extends Component {
 
@@ -46,9 +48,9 @@ export default class App extends Component {
 		});
 	}
 
-	changeInputValue(event) {
+	changeInputValue(event, asd, payload) {
 		this.setState({
-			inputValue: event.target.value,
+			inputValue: payload,
 		});
 	}
 
@@ -58,6 +60,7 @@ export default class App extends Component {
 
 	render() {
 		const validateLength = bind(validator.isLength, null, bind.placeholder, { min: 6 });
+		const validateEquals = bind(validator.equals, null, bind.placeholder, "correct");
 
 		return (
 			<MuiThemeProvider muiTheme={getMuiTheme()}>
@@ -69,11 +72,25 @@ export default class App extends Component {
 								<div>This group is {this.state.groupValid ? "VALID" : "INVALID"}</div>
 								<h3>Email</h3>
 								<Validate onErrorChange={this.onValidateError} validators={[validator.isEmail]} feedbackOnMount>
-									<input className="normal-input" type="text" value={this.state.inputValue} onChange={this.changeInputValue}/>
+									<input className="normal-input" type="text"/>
 								</Validate>
 								<h3>Password</h3>
-								<Validate onErrorChange={this.onValidateError} validators={[validateLength]} errorText="Password not long enough" passError>
+								<Validate onErrorChange={this.onValidateError} validators={[validateLength]} errorText="Password minimum six characters" passError>
 									<TextField type="password" />
+								</Validate>
+								<Validate validators={[validateEquals]} impatientError>
+									<select className="normal-input">
+										<option value="first">First</option>
+										<option value="second">Second</option>
+										<option value="correct">Correct</option>
+									</select>
+								</Validate>
+								<Validate validators={[validateEquals]} errorText="That's an unfortunate choice" onChangeValueKeys={[]} onChangeValuePosition={1} impatientError passError>
+									<SelectField>
+										<MenuItem value="correct" primaryText="Correct" />
+										<MenuItem value="other" primaryText="Every Night" />
+										<MenuItem value="another" primaryText="Weeknights" />
+									</SelectField>
 								</Validate>
 							</ValidateGroup>
 							<ValidateGroup validChange={this.setGroup2Valid}>
@@ -93,3 +110,5 @@ export default class App extends Component {
 		);
 	}
 }
+
+// value={this.state.inputValue} onChange={this.changeInputValue}
