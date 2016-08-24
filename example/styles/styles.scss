@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,500);
+@import './_variables.scss';
 
 html, body {
     margin: 0;
@@ -6,60 +7,189 @@ html, body {
     font-family: "Source Sans Pro", sans-serif;
     height: 100%;
     letter-spacing: 0.015em;
+    color: $default-text;
 }
 
 #react-mount {
     height: 100%;
 }
 
+button {
+    background: white;
+    border: none;
+    padding: 0.75em 1em;
+    border-radius: 0.5em;
+    margin-top: 1em;
+}
+
 input {
     border: 2px solid white;
     padding: 0.75em 0.9em;
     border-radius: 0.2em;
-    color: #704753;
 }
 
 .app {
-    height: 100%;
+    //height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+@keyframes header {
+    0% {
+        background: $palette-green;
+    }
+
+    50% {
+        background: $palette-yellowish;
+    }
+
+    100% {
+        background: $palette-red;
+    }
+}
+
+@keyframes blurbText {
+    0% {
+        color: desaturate(darken($palette-green, 5), 20);
+    }
+
+    50% {
+        color: desaturate(darken($palette-yellowish, 18), 20);
+    }
+
+    100% {
+        color: desaturate(darken($palette-red, 5), 20);
+    }
+}
+
+.header {
+    //background: linear-gradient(to top, darken($palette-green, 10), lighten($palette-green, 10));
+    background: $palette-green;
+    min-height: 5em;
+    flex-shrink: 0;
+    color: white;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    position: relative;
+    box-shadow: inset 0 -5px 30px -18px darken($palette-dark-purple, 10);
+    text-align: center;
+
+    animation: header 8s ease-in-out 1s infinite alternate;
+
+    &:after {
+        position: absolute;
+        background: linear-gradient(to bottom, white, rgba(255, 255, 255, 0), #604bbf);
+        opacity: 0.12;
+        z-index: 0;
+        content: "";
+        width: 100%;
+        height: 100%;
+    }
+
+    h1 {
+        z-index: 1;
+        font-size: 5em;
+        font-weight: 300;
+    }
+}
+
+code {
+    background: $background-code;
+    padding: 0.2em 0.4em;
+    border-radius: 0.2em;
+}
+
+.showcase-blurb {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 25px -7px rgba($default-shadow, 0.35);
+    border-bottom: 0.35em solid white;
+    position: relative;
+    box-sizing: border-box;
+    text-align: center;
+
+    animation: header 8s ease-in-out 1s infinite alternate;
+
+    &:after {
+        position: absolute;
+        background: linear-gradient(to bottom, white, #ebeeff);
+        opacity: 0.9;
+        z-index: 0;
+        content: "";
+        width: 100%;
+        height: 100%;
+    }
+
+    * {
+        z-index: 1;
+    }
+
+    h2 {
+        font-size: 1.8em;
+        animation: blurbText 8s ease-in-out 1s infinite alternate;
+        margin-bottom: 0.4em;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+    }
+
+    h4 {
+        margin-top: 0.2em;
+    }
+}
+
+.showcase {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    //box-shadow: inset 0 5px 30px -18px darken($palette-dark-purple, 10);
+}
+
+.showcase-row {
+    @media #{$mobile-sml-media} {
+        flex-direction: column;
+    }
+
+    flex-shrink: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.showcase-left, .showcase-right {
+    @media #{$mobile-sml-media} {
+        flex-basis: auto;
+        width: 100%;
+        //flex-grow: 1;
+    }
 
     padding: 1em;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    flex-grow: 1;
 }
 
-.validate-component {
-    &.error {
-        .normal-input {
-            background: #ff9090;
-            border: 2px solid red;
-        }
-    }
+.showcase-left {
+    flex-basis: 65%;
 }
 
-.outer-validate-group {
-    padding: 2em;
-    background: #ffee90;
-    border-radius: 4em;
-
-    transition: 0.5s ease-in-out background;
-
-    &.valid {
-        background: #94ebaa;
-    }
-}
-
-.validate-group {
-    padding: 2em;
-    margin-top: 1em;
-    border-radius: 2em;
-    background: #f9f0f3;
-
-    transition: background 0.5s ease-in-out;
-
-    &.valid {
-        background: #45cb87;
-    }
+.showcase-right {
+    flex-basis: 35%;
+    box-shadow: inset 5px 0 20px -15px darken($palette-dark-purple, 10);
+    background: $background-lower-level;
+    justify-content: center;
+    align-items: center;
 }

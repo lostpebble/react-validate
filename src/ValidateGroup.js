@@ -13,17 +13,24 @@ export default class ValidateGroup extends Component {
 		this.state = {
 			valid: null,
 			validStates: new Map(),
-			id: props.id.length ? props.id : uniqueId('inptval_'),
+			id: props.id.length ? props.id : uniqueId('valgrp_'),
 		};
 
 		this.validChangeInGroup = ::this.validChangeInGroup;
 		this.checkValidation = ::this.checkValidation;
 		this.validatorLeaveGroup = ::this.validatorLeaveGroup;
-		this.validationTimeout = null;
+		// this.validationTimeout = null;
 	}
 
 	componentWillMount() {
-		if (this.props.validChangeInGroup) this.props.validChangeInGroup(false, this.state.id);
+		console.log(`Mounting validation group ${this.state.id}`);
+		console.dir(this.props);
+
+		if (this.props.validChangeInGroup) {
+			console.log(`Regsitering validation group in parent group ${this.state.id}`);
+
+			this.props.validChangeInGroup(false, this.state.id);
+		}
 	}
 
 	componentWillUnmount() {
@@ -32,6 +39,8 @@ export default class ValidateGroup extends Component {
 
 	checkValidation() {
 		let validState = true;
+
+		console.log(`Checking group validation in ${this.state.id}`);
 
 		for (const isValid of this.state.validStates.values()) {
 			if (!isValid) {
@@ -63,25 +72,34 @@ export default class ValidateGroup extends Component {
 		// (each component inside this group calls this
 		//  method immediately on mount to register itself)
 
+		console.log(`Valid change in group ${this.state.id} from ${id}`);
+
 		this.state.validStates.set(id, value);
+
+		this.checkValidation();
 
 		// Small timeout to ensure all Validate components
 		// are registered without calling checkValidation each time
-		this.validationTimeout = setTimeout(this.checkValidation, 20);
+		// this.validationTimeout = setTimeout(this.checkValidation, 1000);
 	}
 
 	render() {
-		const baseProps = {};
+		const baseProps = {
+			validChangeInGroup: this.validChangeInGroup,
+			validatorLeaveGroup: this.validatorLeaveGroup,
+		};
 
-		if (this.props.impatientError != null) baseProps.impatientError = this.props.impatientError;
+		if (this.props.impatientFeedback != null) baseProps.impatientFeedback = this.props.impatientFeedback;
 
 		const newChildren = React.Children.map(this.props.children, (child) => {
-			if (child && (child.type === Validate || child.type === ValidateGroup)) {
-				return React.cloneElement(child, Object.assign(baseProps, { validChangeInGroup: this.validChangeInGroup, validatorLeaveGroup: this.validatorLeaveGroup }));
+			if (child && (child.type === Validate || child.type.name === "ValidateGroup")) {
+				return React.cloneElement(child, baseProps);
 			}
 
 			return child;
 		});
+
+		// console.dir(newChildren);
 
 		return (
 			<div className={`${this.props.className} ${this.state.valid ? "valid" : "invalid"}`}>{newChildren}</div>
@@ -90,7 +108,7 @@ export default class ValidateGroup extends Component {
 }
 
 ValidateGroup.propTypes = {
-	impatientError: PropTypes.bool,
+	impatientFeedback: PropTypes.bool,
 	onValidChange: PropTypes.func,
 	className: PropTypes.string,
 	id: PropTypes.string,
@@ -102,6 +120,6 @@ ValidateGroup.propTypes = {
 
 ValidateGroup.defaultProps = {
 	id: "",
-	impatientError: null,
+	impatientFeedback: null,
 	className: "validate-group",
 };

@@ -15,7 +15,7 @@ export default class Validate extends Component {
 			childValue: props.defaultValue,
 			validity: null,
 			showError: false,
-			id: this.props.id.length ? this.props.id : uniqueId('inptval_'),
+			id: this.props.id.length ? this.props.id : uniqueId('valinpt_'),
 		};
 
 		// console.dir(props);
@@ -55,7 +55,7 @@ export default class Validate extends Component {
 			const newValue = this._getChild(nextProps.children).props[this.props.propForValue];
 
 			if (newValue !== this.recentChange) {
-				this._checkValidation(newValue, !this.state.showError ? !this.props.impatientError : false);
+				this._checkValidation(newValue, !this.state.showError ? !this.props.impatientFeedback : false);
 			}
 		}
 	}
@@ -77,13 +77,13 @@ export default class Validate extends Component {
 			childValue: newValue,
 		});
 
-		this._checkValidation(newValue, !this.state.showError ? !this.props.impatientError : false);
+		this._checkValidation(newValue, !this.state.showError ? !this.props.impatientFeedback : false);
 	}
 
 	onBlur() {
 		// don't check validation on blur if it's already been
 		// checked impatiently on every change
-		if (!this.props.impatientError) {
+		if (!this.props.impatientFeedback) {
 			this._checkValidation(this.state.uncontrolled ? this.state.childValue : this.props.children.props[this.props.propForValue]);
 		}
 	}
@@ -191,7 +191,7 @@ Validate.propTypes = {
 	onValidChange: PropTypes.func,
 	onErrorChange: PropTypes.func,
 	passError: PropTypes.bool,
-	impatientError: PropTypes.bool,
+	impatientFeedback: PropTypes.bool,
 	feedbackOnMount: PropTypes.bool,
 };
 
@@ -208,7 +208,7 @@ Validate.defaultProps = {
 	validators: [],
 	errorText: "",
 	passError: false,
-	impatientError: false,
+	impatientFeedback: false,
 	feedbackOnMount: false,
 	className: "validate-component",
 };

@@ -20,6 +20,7 @@ module.exports = {
     loaders: [
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel' },
       { test: /\.s?css$/, loader: 'style!css!sass' },
+      { test: /\.md$/, loader: "html!markdown" },
     ],
   },
 
