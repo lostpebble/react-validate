@@ -15,6 +15,7 @@
     "build": "npm run build-cjs && npm run build-es",
     "build-cjs": "rimraf lib && cross-env BABEL_ENV=cjs babel ./src -d lib --ignore '__tests__' --no-comments",
     "build-es": "rimraf es6 && cross-env BABEL_ENV=es babel ./src -d es6 --ignore '__tests__' --no-comments",
+    "build-ghp": "rimraf gh-pages && cross-env NODE_ENV=production webpack --config ./example/webpack.config.js",
     "start": "cross-env BABEL_ENV=dev nodemon example/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "npm run build"
@@ -37,6 +38,7 @@
     "react": "^0.14.0 || ^15.0.0"
   },
   "devDependencies": {
+    "autoprefixer": "^6.4.0",
     "babel-cli": "^6.11.4",
     "babel-core": "^6.13.2",
     "babel-loader": "^6.2.5",
@@ -59,6 +61,7 @@
     "material-ui": "^0.15.4",
     "node-sass": "^3.8.0",
     "nodemon": "^1.10.2",
+    "postcss-loader": "^0.10.1",
     "react-dom": "^15.3.1",
     "react-tap-event-plugin": "^1.0.0",
     "rimraf": "^2.5.4",

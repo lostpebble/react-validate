@@ -20,11 +20,11 @@ Since forms seem to be the most common use of validation, let's start with a sim
 <form action="/post-form-data">
   <ValidateGroup onValidChange={this.setSubmit}>
     <h3>Email</h3>
-	  <Validate validators={[validateEmail]}>
+	  <Validate validators={[ validateEmail ]}>
 	    <input type="text"/>
 	  </Validate>
 	<h3>Password</h3>
-	  <Validate validators={[validateLength]}>
+	  <Validate validators={[ validateLength ]}>
 	    <input type="password"/>
 	  </Validate>
 	<button type="submit">Submit</button>
