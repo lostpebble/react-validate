@@ -97,6 +97,18 @@ input {
     }
 }
 
+.error-message {
+  transition: opacity 0.3s ease-in-out;
+
+  &.hidden {
+    opacity: 0;
+  }
+
+  &.shown {
+    opacity: 1;
+  }
+}
+
 pre {
     background: $background-code;
     padding: 0.2em 0.4em;

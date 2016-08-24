@@ -33,6 +33,7 @@ export default class SimpleExample extends Component {
 					<h3>Email</h3>
 					<Validate validators={[validateEmail]}>
 						<input type="text"/>
+            <ErrorMessage manual>{errorMessages.email}</ErrorMessage>
 					</Validate>
 					<h3>Password</h3>
 					<Validate validators={[validateLength]}>
