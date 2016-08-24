@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Validate, ValidateGroup } from '../../src/index';
+import { Validate, ValidateGroup, ErrorMessage } from '../../src/index';
 
 import validator from 'validator';
 import bind from 'lodash/bind';
@@ -9,6 +9,11 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+
+const errorMessages = {
+	email: "Not a valid email",
+	password: "Password too short. Use at least 6 characters.",
+};
 
 export default class App extends Component {
 
@@ -66,12 +71,13 @@ export default class App extends Component {
 			<MuiThemeProvider muiTheme={getMuiTheme()}>
 				<div className="app">
 						<h1>React-Validate</h1>
-						<ValidateGroup className="outer-validate-group" validChange={this.setOuterGroupValid}>
+						<ValidateGroup className="outer-validate-group" onValidChange={this.setOuterGroupValid}>
 							<div>These groups together are {this.state.outerGroupValid ? "VALID" : "INVALID"}</div>
 							<ValidateGroup validChange={this.setGroupValid}>
 								<div>This group is {this.state.groupValid ? "VALID" : "INVALID"}</div>
 								<h3>Email</h3>
-								<Validate onErrorChange={this.onValidateError} validators={[validator.isEmail]} feedbackOnMount>
+								<Validate onErrorChange={this.onValidateError} validators={[validator.isEmail]} impatientError>
+									<ErrorMessage>{errorMessages.email}</ErrorMessage>
 									<input className="normal-input" type="text"/>
 								</Validate>
 								<h3>Password</h3>
@@ -85,7 +91,7 @@ export default class App extends Component {
 										<option value="correct">Correct</option>
 									</select>
 								</Validate>
-								<Validate validators={[validateEquals]} errorText="That's an unfortunate choice" onChangeValueKeys={[]} onChangeValuePosition={1} impatientError passError>
+								<Validate validators={[validateEquals]} errorText="That's an unfortunate choice" onChangeValueKeys={[]} onChangeValuePosition={2} impatientError passError>
 									<SelectField>
 										<MenuItem value="correct" primaryText="Correct" />
 										<MenuItem value="other" primaryText="Every Night" />
@@ -93,7 +99,7 @@ export default class App extends Component {
 									</SelectField>
 								</Validate>
 							</ValidateGroup>
-							<ValidateGroup validChange={this.setGroup2Valid}>
+							<ValidateGroup onValidChange={this.setGroup2Valid}>
 								<div>This group is {this.state.group2Valid ? "VALID" : "INVALID"}</div>
 								<h3>Email</h3>
 								<Validate>

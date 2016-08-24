@@ -1,7 +1,7 @@
 {
   "name": "react-validate",
   "version": "0.1.0",
-  "description": "A simple, adaptable validation wrapper component. Small footprint, easy to use and to the point.",
+  "description": "Simple, adaptable validation for React components and forms",
   "files": [
     "*.md",
     "docs",
@@ -15,7 +15,7 @@
     "build": "npm run build-cjs && npm run build-es",
     "build-cjs": "rimraf lib && cross-env BABEL_ENV=cjs babel ./src -d lib --ignore '__tests__' --no-comments",
     "build-es": "rimraf es6 && cross-env BABEL_ENV=es babel ./src -d es6 --ignore '__tests__' --no-comments",
-    "start": "nodemon example/server.js",
+    "start": "cross-env BABEL_ENV=dev nodemon example/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "npm run build"
   },

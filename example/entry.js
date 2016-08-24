@@ -9,6 +9,7 @@ require('react-tap-event-plugin')();
 require('./styles/styles.scss');
 
 render((<App/>), document.getElementById('react-mount'));
+/*
 
 // This is required for hot reloading
 if (module.hot) {
@@ -22,4 +23,4 @@ if (module.hot) {
 			document.getElementById('react-mount')
 		);
 	});
-}
+}*/

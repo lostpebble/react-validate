@@ -1,0 +1,21 @@
+{
+  "presets": [
+    "es2015",
+    "stage-0",
+    "react"
+  ],
+
+  "env": {
+    "cjs": {
+      "plugins": ["add-module-exports", "babel-plugin-groundskeeper-willie"]
+    },
+    "es": {
+      "plugins": ["babel-plugin-groundskeeper-willie"]
+    },
+    "dev": {
+      "presets": [
+        "react-hmre"
+      ]
+    }
+  }
+}

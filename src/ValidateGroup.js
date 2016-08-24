@@ -47,7 +47,7 @@ export default class ValidateGroup extends Component {
 				valid: validState,
 			});
 
-			if (this.props.validChange) this.props.validChange(validState);
+			if (this.props.onValidChange) this.props.onValidChange(validState);
 			if (this.props.validChangeInGroup) this.props.validChangeInGroup(validState, this.state.id);
 		}
 	}
@@ -91,7 +91,7 @@ export default class ValidateGroup extends Component {
 
 ValidateGroup.propTypes = {
 	impatientError: PropTypes.bool,
-	validChange: PropTypes.func,
+	onValidChange: PropTypes.func,
 	className: PropTypes.string,
 	id: PropTypes.string,
 	children: PropTypes.oneOfType([

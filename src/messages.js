@@ -24,6 +24,6 @@ export const validatorError = (value) =>
 		-If the value prop on the child component has a different name, specify it in the propForValue prop
 		 e.g \<Validate ... propForValue="percentComplete" \>
 		
-		-Make sure your validator function can handle this type of value (i.e. string, number etc.)
+		-Make sure your validator function can handle the value being passed to it (i.e. string, number etc.)
 		
 		-Make sure your validator function takes only one argument (the value to validate).`;
