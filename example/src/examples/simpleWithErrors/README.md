@@ -13,8 +13,8 @@ Let's  try the same example with feedback this time.
     </Validate>
     <h3>Password</h3>
     <Validate validators={[validateLength]}>
-      <input type="password"/>
       <ErrorMessage>{errorMessages.password}</ErrorMessage>
+      <input type="password"/>
     </Validate>
     <button type="submit">Submit</button>
   </ValidateGroup>
@@ -23,6 +23,8 @@ Let's  try the same example with feedback this time.
 One of the easiest ways to provide error feedback is to place `<ErrorMessage>` components inside of `<Validate>` components.
 These components will become visible or hidden according to the error settings you've set via props on the `<Validate>` component. By default,
 `<ErrorMessage>` will only display its contents when focus is lost and the input is found to be invalid.
+
+This component and the input component can also be placed in any order inside of the `<Validate>` component, as shown in this example.
 
 ### ** A look at the`<ErrorMessage>` component**
 
