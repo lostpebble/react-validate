@@ -96,10 +96,14 @@ export default class ValidateGroup extends Component {
 				return React.cloneElement(child, baseProps);
 			}
 
+			if (child && child.props && child.props.type === "submit") {
+				return React.cloneElement(child, { disabled: !this.state.valid });
+      }
+
 			return child;
 		});
 
-		// console.dir(newChildren);
+		console.dir(newChildren);
 
 		return (
 			<div className={`${this.props.className} ${this.state.valid ? "valid" : "invalid"}`}>{newChildren}</div>

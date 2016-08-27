@@ -1,6 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,500);
 @import './_variables.scss';
 
+a {
+  color: $palette-green;
+  text-decoration: none;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -20,9 +25,19 @@ button {
   padding: 0.75em 1em;
   border-radius: 0.5em;
   margin-top: 1em;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1em;
+
+	&:disabled {
+		background: lighten($background-lower-level, 5);
+	}
 }
 
 input {
+  @media #{$mobile-sml-media} {
+    font-size: 1em;
+  }
+
   border: 2px solid white;
   padding: 0.75em 0.9em;
   border-radius: 0.2em;
@@ -34,6 +49,65 @@ input {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+}
+
+.github {
+  @media #{$mobile-sml-media} {
+    font-size: 28px;
+  }
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 5;
+  padding: 1em 1em 4em 6em;
+  //background: red;
+  overflow: hidden;
+
+  $github-color: rgba(155, 155, 155, 0.2);
+
+  &:after {
+    content: "";
+    background: $github-color;
+    position: absolute;
+    top: -50%;
+    right: -75%;
+    width: 200%;
+    height: 100%;
+    transform: rotate(45deg);
+    z-index: -1;
+    transition: background 0.3s ease-in-out;
+  }
+
+  &:hover {
+    svg {
+      fill: $palette-retro-purple;
+    }
+
+    &:after {
+      background: rgba(255, 255, 255, 0.4);
+    }
+  }
+
+  svg {
+    fill: white;
+    width: 3em;
+    height: 3em;
+    transition: fill 0.3s ease-in-out;
+    z-index: 1;
+
+
+  }
+}
+
+.error-message {
+  color: $palette-red;
+  font-size: 0.75em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px lighten($background-lower-level, 5);
+  //text-align: center;
+  margin: 0.5em 0;
+  max-width: 14.6em;
 }
 
 @keyframes header {
@@ -112,7 +186,33 @@ input {
   }
 }
 
+table {
+  th {
+    border-bottom: 2px solid $background-lower-level;
+    background: $background-lower-level;
+    background: linear-gradient(to top, lighten($background-lower-level, 5), white 150%);
+    padding: 0.4em 0.8em;
+  }
+
+  td {
+    border-bottom: 2px solid lighten($background-lower-level, 5);
+    padding: 0.3em 0.6em;
+    //margin-bottom: 0.2em;
+    //background: grey;
+    //box-sizing: content-box;
+  }
+
+  th, td {
+
+  }
+}
+
 pre {
+  @media #{$mobile-sml-media} {
+    font-size: 32px;
+  }
+
+  //font-size: 0.9em;
   background: $background-code;
   padding: 0.2em 0.4em;
   border-radius: 0.2em;
@@ -121,11 +221,19 @@ pre {
 
 code {
   background: $background-code;
-  padding: 0.2em 0.4em;
+  border-bottom: 1px solid darken($background-code, 15);
+  padding: 0.1em 0.25em;
+  margin: 0 0.1em;
   border-radius: 0.2em;
+  line-height: 1.65em;
+  //font-weight: bold;
 }
 
 .showcase-blurb {
+  @media #{$mobile-sml-media} {
+    font-size: 36px;
+  }
+
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -170,6 +278,11 @@ code {
 }
 
 .showcase {
+  @media #{$mobile-sml-media} {
+    font-size: 42px;
+  }
+
+  font-size: 18px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -204,10 +317,13 @@ code {
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  flex-grow: 1;
+  flex-grow: 0;
 }
 
 .showcase-left {
+  //align-self: center;
+  margin-left: auto;
+  max-width: 50em;
   flex-basis: 65%;
 }
 

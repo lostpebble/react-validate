@@ -2,8 +2,11 @@ import React, {Component, PropTypes} from 'react';
 
 import introMarkdown from './intro.md';
 
-import SimpleExample from './examples/SimpleExample';
-import simpleMarkdown from './examples/simpleMarkdown.md';
+import SimpleExample from './examples/simple/SimpleExample';
+import simpleMarkdown from './examples/simple/README.md';
+
+import SimpleExampleWithErrors from './examples/simpleWithErrors/SimpleWithErrorsExample';
+import simpleWithErrorsMarkdown from './examples/simpleWithErrors/README.md';
 
 export default class Showcase extends Component {
 	render() {
@@ -24,6 +27,12 @@ export default class Showcase extends Component {
 						<SimpleExample/>
 					</div>
 				</div>
+        <div className="showcase-row">
+          <div className="showcase-left" dangerouslySetInnerHTML={{ __html: simpleWithErrorsMarkdown }}></div>
+          <div className="showcase-right">
+            <SimpleExampleWithErrors/>
+          </div>
+        </div>
 				<div className="showcase-row">
 					<div className="showcase-left"></div>
 					<div className="showcase-right"></div>

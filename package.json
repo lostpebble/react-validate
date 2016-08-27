@@ -1,5 +1,5 @@
 {
-  "name": "react-validate",
+  "name": "react-component-validate",
   "version": "0.1.0",
   "description": "Simple, adaptable validation for React components and forms",
   "files": [
