@@ -1,5 +1,3 @@
-## *Busy setting up this module. Don't use just yet!*
-
 ### [Examples in action and help getting started here](https://lostpebble.github.io/react-validate/)
 
 React-Validate
