@@ -1,6 +1,6 @@
 {
   "name": "react-component-validate",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple, adaptable validation for React components and forms",
   "files": [
     "*.md",
