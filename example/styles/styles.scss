@@ -299,10 +299,16 @@ code {
   $blockquote-color: #d5d5e3;
 
   blockquote {
+    @media #{$mobile-sml-media} {
+      margin-right: 0;
+      border-radius: 2em;
+    }
+
     position: relative;
     //margin-right: -15%;
     margin-right: -2em;
-    margin-left: 15%;
+    //margin-left: 15%;
+    margin-left: 0;
     background: $blockquote-color;
     background: linear-gradient(to left, $background-lower-level, lighten($background-lower-level, 5));
     box-shadow: inset 5px 0 20px -15px darken($palette-dark-purple, 10);
