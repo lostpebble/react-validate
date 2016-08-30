@@ -29,6 +29,14 @@ module.exports = {
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel' },
       { test: /\.s?css$/, loader: 'style!css!postcss!sass' },
       { test: /\.md$/, loader: "html!highlight!markdown" },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loaders: [
+          'file?name=[name].[ext]',
+          'image?bypassOnDebug&optimizationLevel=7&interlaced=false',
+        ],
+        exclude: /node_modules/,
+      },
     ],
   },
 

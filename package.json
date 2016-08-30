@@ -1,6 +1,6 @@
 {
-  "name": "react-component-validate",
-  "version": "0.1.1",
+  "name": "react-validate",
+  "version": "0.1.2",
   "description": "Simple, adaptable validation for React components and forms",
   "files": [
     "*.md",
@@ -55,8 +55,10 @@
     "css-loader": "^0.23.1",
     "express": "^4.14.0",
     "express-urlrewrite": "^1.2.0",
+    "file-loader": "^0.9.0",
     "highlight-loader": "^0.7.2",
     "html-loader": "^0.4.3",
+    "image-webpack-loader": "^2.0.0",
     "markdown-loader": "^0.1.7",
     "material-ui": "^0.15.4",
     "node-sass": "^3.8.0",
@@ -75,7 +77,6 @@
     "webpack-visualizer-plugin": "^0.1.5"
   },
   "dependencies": {
-    "lodash": "^4.15.0",
-    "react": "^15.3.1"
+    "lodash": "^4.15.0"
   }
 }

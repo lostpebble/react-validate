@@ -21,12 +21,14 @@ Let's  try the same example with feedback this time.
 </form>
 ```
 One of the easiest ways to provide error feedback is to place `<ErrorMessage>` components inside of `<Validate>` components.
-These components will become visible or hidden according to the error settings you've set via props on the `<Validate>` component. By default,
+These components will become visible or hidden according to the error settings [(see next section)](#error-props) you've set via props on the `<Validate>` component. By default,
 `<ErrorMessage>` will only display its contents when focus is lost and the input is found to be invalid.
 
-This component and the input component can also be placed in any order inside of the `<Validate>` component, as shown in this example.
+> This component and the input component can also be placed in any order inside of the `<Validate>` component, as shown in this example (not the nicest design, but for the sake of demonstration we'll make an exception!)
 
-### ** A look at the`<ErrorMessage>` component**
+<div id="error-message-component"></div>
+
+### A look at the`<ErrorMessage>` component
 
 Default CSS class name: `.error-message`
 
@@ -42,6 +44,8 @@ Default CSS class name: `.error-message`
     </tr>
   </tbody>
 </table>
+
+<div id="error-props"></div>
 
 Error feedback configuration
 -----------

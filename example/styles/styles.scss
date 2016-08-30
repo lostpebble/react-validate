@@ -167,10 +167,17 @@ input {
 
   }
 
+  img {
+    max-width: 8em;
+    margin: 1.5em 0 2.5em 0;
+    opacity: 0.8;
+  }
+
   h1 {
     z-index: 1;
     font-size: 5em;
     font-weight: 300;
+    margin-bottom: 0;
   }
 }
 
@@ -282,12 +289,34 @@ code {
     font-size: 42px;
   }
 
-  font-size: 18px;
+  //font-size: 16px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+
+  $blockquote-color: #d5d5e3;
+
+  blockquote {
+    position: relative;
+    //margin-right: -15%;
+    margin-right: -2em;
+    margin-left: 15%;
+    background: $blockquote-color;
+    background: linear-gradient(to left, $background-lower-level, lighten($background-lower-level, 5));
+    box-shadow: inset 5px 0 20px -15px darken($palette-dark-purple, 10);
+    padding: 1em 2em;
+    border-radius: 2em 0 0 2em;
+    color: $darker-text;
+
+    p {
+      //width: 100%;
+      //height: 100%;
+      //position: absolute;
+
+    }
+  }
 
   //box-shadow: inset 0 5px 30px -18px darken($palette-dark-purple, 10);
 }

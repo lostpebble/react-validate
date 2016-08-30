@@ -12,9 +12,9 @@ React-Validate aims to simplify validation, be it for forms or any other sequenc
 For the sake of keeping things simple, we'll refer to the components that are wrapped by `<Validate>` as **inputs** from now on.
 
 One important concept to grasp before continuing:
-There is a difference between something being _invalid_ and something being in a state of _error_.
+There is a difference between something being _invalid_ and something being _in a state of error_.
 For a better user experience, even if an input is invalid, we often don't want to shove an error into a user's face straight away.
-There are various ways React-Validate deals with this, which we'll get to soon.
+[There are various ways React-Validate deals with this](#error-props), which we'll get to soon.
 
 Validator functions
 -------------
