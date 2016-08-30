@@ -21,7 +21,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, '../gh-pages'),
     filename: 'bundle.js',
-    publicPath: '/__build__/',
+    publicPath: '/react-validate/gh-pages/',
   },
 
   module: {
