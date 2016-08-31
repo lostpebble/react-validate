@@ -16,6 +16,8 @@ export default class SimpleWithErrors extends Component {
     alert(`Mock submit form`);
   }
 
+  //{errorMessages.email}
+
 	render() {
 		const validateEmail = validator.isEmail;
 
@@ -25,11 +27,11 @@ export default class SimpleWithErrors extends Component {
 					<h3>Email</h3>
 					<Validate validators={[validateEmail]}>
 						<input type="text"/>
-            <ErrorMessage>{errorMessages.email}</ErrorMessage>
+            <ErrorMessage>Not a valid email</ErrorMessage>
 					</Validate>
 					<h3>Password</h3>
 					<Validate validators={[validateLength]}>
-            <ErrorMessage>{errorMessages.password}</ErrorMessage>
+            <ErrorMessage>Password too short. Use at least 6 characters</ErrorMessage>
 						<input type="password"/>
 					</Validate>
 					<button type="submit">Submit</button>

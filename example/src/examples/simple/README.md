@@ -25,6 +25,6 @@ but this is the most basic use of React-Validate and shows how it Just Works™ 
 > Try filling in a valid email and password (6 or more characters) and you'll see `<ValidateGroup>` takes care of enabling and disabling any
 element inside of it that has a prop of type which has been set to submit, i.e. `type="submit"`.
 
-You'll also notice there isn't much feedback to the user. This is bad design and can cause frustration. In this example,
-if a user types in a password less than 6 characters, how do they know they are in the wrong? This is where error feedback
-comes in.
+You'll also notice there isn't much feedback to the user. This is bad design and can cause frustration
+(even if we explicitly gave instructions to the user for it). In this example, if a user types in a password less
+than 6 characters, how do they know they are in the wrong? This is where error feedback comes in.
