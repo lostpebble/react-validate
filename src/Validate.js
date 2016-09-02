@@ -71,13 +71,13 @@ export default class Validate extends Component {
 	onValueChange(...args) {
 		let newValue = args[this.props.onChangeValuePosition];
 
-    console.dir(args[0].target);
+    // console.dir(args[0].target);
 
 		this.props.onChangeValueKeys.forEach((key) => {
 			newValue = newValue[key];
 		});
 
-		console.log(`Trying to validate value: ${newValue} on ${this.state.id}`);
+		// console.log(`Trying to validate value: ${newValue} on ${this.state.id}`);
 
 		this.setState({
 			childValue: newValue,
@@ -96,13 +96,15 @@ export default class Validate extends Component {
 
 	_getChild(children) {
 		if (this.state.multipleChildren) {
-			children.forEach(child => {
-				if (child.type !== ErrorMessage) {
-					return child;
-				}
-      });
+			if (this.props.index >= 0) {
+				return children[this.props.index];
+			}
 
-			return children[this.props.index];
+			for (let i = 0; i < children.length; i++) {
+				if (children[i].type !== ErrorMessage) {
+					return children[i];
+				}
+			}
 		}
 
 		return children;
@@ -164,6 +166,11 @@ export default class Validate extends Component {
 				return React.cloneElement(child, { visible: this.state.showError });
 			}
 
+			// explicit index set and current child isn't that one
+			if (this.props.index >= 0 && index !== this.props.index) {
+				return React.cloneElement(child, {});
+			}
+
 			const baseProps = {
 				onBlur: this.onBlur,
 			};
@@ -210,7 +217,7 @@ Validate.propTypes = {
 
 Validate.defaultProps = {
 	id: "",
-	index: 0,
+	index: -1,
 	defaultValue: "",
 	onChangeValuePosition: 0,
 	onChangeValueKeys: ["target", "value"],
