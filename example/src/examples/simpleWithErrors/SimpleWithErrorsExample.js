@@ -34,6 +34,10 @@ export default class SimpleWithErrors extends Component {
             <ErrorMessage>Password too short. Use at least 6 characters</ErrorMessage>
 						<input type="password"/>
 					</Validate>
+          <Validate propForValue="checked" onChangeValueKeys={["target", "checked"]} impatientFeedback>
+            <ErrorMessage>Falsy value</ErrorMessage>
+						<input name="checkname" type="checkbox" defaultChecked={false}/>
+          </Validate>
 					<button type="submit">Submit</button>
 				</ValidateGroup>
 			</form>

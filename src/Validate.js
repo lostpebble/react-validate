@@ -32,9 +32,13 @@ export default class Validate extends Component {
 	componentWillMount() {
 		const startingValue = this._getChild(this.props.children).props[this.props.propForValue];
 
+    // console.dir(this._getChild(this.props.children).props);
+
 		// const startingValue = "what";
 
 		if (typeof startingValue !== 'undefined') {
+      console.log(`Component ${this.state.id} is controlled, has a value`);
+
 			this.setState({
 				uncontrolled: false,
 				childValue: startingValue,
@@ -67,11 +71,13 @@ export default class Validate extends Component {
 	onValueChange(...args) {
 		let newValue = args[this.props.onChangeValuePosition];
 
+    console.dir(args[0].target);
+
 		this.props.onChangeValueKeys.forEach((key) => {
 			newValue = newValue[key];
 		});
 
-		// console.log(`Trying to validate value: ${newValue} on ${this.state.id}`);
+		console.log(`Trying to validate value: ${newValue} on ${this.state.id}`);
 
 		this.setState({
 			childValue: newValue,
@@ -90,6 +96,12 @@ export default class Validate extends Component {
 
 	_getChild(children) {
 		if (this.state.multipleChildren) {
+			children.forEach(child => {
+				if (child.type !== ErrorMessage) {
+					return child;
+				}
+      });
+
 			return children[this.props.index];
 		}
 
@@ -111,12 +123,19 @@ export default class Validate extends Component {
 
 		this.recentChange = value;
 
-		try {
-			newValidity = !(this.props.validators.some((validator) => !validator(value)));
-		} catch (e) {
-			console.error(e);
-			console.warn(validatorError(value));
-		}
+    if (!this.props.validators.length) {
+      // If no validator just check for truthy value
+      if (!value) {
+        newValidity = false;
+      }
+    } else {
+      try {
+        newValidity = !(this.props.validators.some((validator) => !validator(value)));
+      } catch (e) {
+        console.error(e);
+        console.warn(validatorError(value));
+      }
+    }
 
 		const state = {};
 
@@ -157,12 +176,6 @@ export default class Validate extends Component {
 			}
 
 			return React.cloneElement(child, baseProps);
-
-			/*if (index === this.props.index) {
-
-			}
-
-			return child;*/
 		}, this);
 
 		return (

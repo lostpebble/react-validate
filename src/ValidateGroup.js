@@ -24,7 +24,7 @@ export default class ValidateGroup extends Component {
 
 	componentWillMount() {
 		console.log(`Mounting validation group ${this.state.id}`);
-		console.dir(this.props);
+		// console.dir(this.props);
 
 		if (this.props.validChangeInGroup) {
 			console.log(`Regsitering validation group in parent group ${this.state.id}`);
@@ -40,7 +40,7 @@ export default class ValidateGroup extends Component {
 	checkValidation() {
 		let validState = true;
 
-		console.log(`Checking group validation in ${this.state.id}`);
+		// console.log(`Checking group validation in ${this.state.id}`);
 
 		for (const isValid of this.state.validStates.values()) {
 			if (!isValid) {
@@ -72,7 +72,7 @@ export default class ValidateGroup extends Component {
 		// (each component inside this group calls this
 		//  method immediately on mount to register itself)
 
-		console.log(`Valid change in group ${this.state.id} from ${id}`);
+		// console.log(`Valid change in group ${this.state.id} from ${id}`);
 
 		this.state.validStates.set(id, value);
 
@@ -103,7 +103,7 @@ export default class ValidateGroup extends Component {
 			return child;
 		});
 
-		console.dir(newChildren);
+		// console.dir(newChildren);
 
 		return (
 			<div className={`${this.props.className} ${this.state.valid ? "valid" : "invalid"}`}>{newChildren}</div>

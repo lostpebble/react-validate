@@ -4,16 +4,16 @@ Simple Example with error feedback
 Let's  try the same example with feedback this time.
 
 ```
-<form action="/post-form-data">
+<form onSubmit={this.formAction}>
   <ValidateGroup>
     <h3>Email</h3>
     <Validate validators={[validateEmail]}>
       <input type="text"/>
-      <ErrorMessage>{errorMessages.email}</ErrorMessage>
+      <ErrorMessage>Not a valid email</ErrorMessage>
     </Validate>
     <h3>Password</h3>
     <Validate validators={[validateLength]}>
-      <ErrorMessage>{errorMessages.password}</ErrorMessage>
+      <ErrorMessage>Password too short. Use at least 6 characters</ErrorMessage>
       <input type="password"/>
     </Validate>
     <button type="submit">Submit</button>
@@ -24,7 +24,8 @@ One of the easiest ways to provide error feedback is to place `<ErrorMessage>` c
 These components will become visible or hidden according to the error settings [(see next section)](#error-props) you've set via props on the `<Validate>` component. By default,
 `<ErrorMessage>` will only display its contents when focus is lost and the input is found to be invalid.
 
-> This component and the input component can also be placed in any order inside of the `<Validate>` component, as shown in this example (not the nicest design, but for the sake of demonstration we'll make an exception!)
+> The `<ErrorMessage>` component and the input component can be placed in any order inside of the `<Validate>` component,
+as shown in this example (not the nicest design, but for the sake of demonstration we'll make an exception!)
 
 <div id="error-message-component"></div>
 
