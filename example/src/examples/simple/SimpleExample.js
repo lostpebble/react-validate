@@ -27,12 +27,11 @@ export default class SimpleExample extends Component {
 			<form onSubmit={this.formAction}>
 				<ValidateGroup>
 					<h3>Email</h3>
-					<Validate validators={[validateEmail]}>
-						<input type="text"/>
-					</Validate>
+
+						<input type="email" name="email" title="Please, provide an e-mail"/>
 					<h3>Password</h3>
 					<Validate validators={[validateLength]}>
-						<input type="password"/>
+						<input type="password" name="password"/>
 					</Validate>
 					<button type="submit">Submit</button>
 				</ValidateGroup>
@@ -40,3 +39,5 @@ export default class SimpleExample extends Component {
 		);
 	}
 }
+
+//<Validate validators={[validateEmail]}></Validate>

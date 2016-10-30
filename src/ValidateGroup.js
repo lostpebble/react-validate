@@ -125,5 +125,5 @@ ValidateGroup.propTypes = {
 ValidateGroup.defaultProps = {
 	id: "",
 	impatientFeedback: null,
-	className: "validate-group",
+	className: "rv-validate-group",
 };

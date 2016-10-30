@@ -95,12 +95,10 @@ input {
     height: 3em;
     transition: fill 0.3s ease-in-out;
     z-index: 1;
-
-
   }
 }
 
-.error-message {
+.rv-error-message {
   color: $palette-red;
   font-size: 0.75em;
   text-transform: uppercase;
@@ -108,6 +106,16 @@ input {
   //text-align: center;
   margin: 0.5em 0;
   max-width: 14.6em;
+
+	transition: opacity 0.3s ease-in-out;
+
+	&.hidden {
+		opacity: 0;
+	}
+
+	&.shown {
+		opacity: 1;
+	}
 }
 
 @keyframes header {
@@ -168,6 +176,10 @@ input {
   }
 
   img {
+		@media #{$mobile-sml-media} {
+			max-width: 10em;
+		}
+
     max-width: 8em;
     margin: 1.5em 0 2.5em 0;
     opacity: 0.8;
@@ -181,16 +193,8 @@ input {
   }
 }
 
-.error-message {
-  transition: opacity 0.3s ease-in-out;
+.rv-error-message {
 
-  &.hidden {
-    opacity: 0;
-  }
-
-  &.shown {
-    opacity: 1;
-  }
 }
 
 table {
@@ -333,12 +337,17 @@ code {
     flex-direction: column;
   }
 
+	position: relative;
   flex-shrink: 0;
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: stretch;
   justify-content: flex-start;
+
+	table {
+		//display: none;
+	}
 }
 
 .showcase-left, .showcase-right {
@@ -348,13 +357,18 @@ code {
     //flex-grow: 1;
   }
 
+	.hljs {
+		white-space: pre-wrap;
+	}
+
   //max-width: 100%;
+	//position: relative;
   padding: 1em;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  flex-grow: 0;
+  //flex-grow: 1;
 }
 
 .showcase-left {
@@ -362,6 +376,8 @@ code {
   margin-left: auto;
   max-width: 50em;
   flex-basis: 65%;
+	flex-shrink: 1;
+	//flex-grow: 0;
 }
 
 .showcase-right {

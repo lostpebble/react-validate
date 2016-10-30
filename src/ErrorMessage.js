@@ -18,5 +18,5 @@ ErrorMessage.propTypes = {
 ErrorMessage.defaultProps = {
 	visible: false,
   manual: false,
-	className: "error-message",
+	className: "rv-error-message",
 };

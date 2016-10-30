@@ -230,5 +230,5 @@ Validate.defaultProps = {
 	passError: false,
 	impatientFeedback: false,
 	feedbackOnMount: false,
-	className: "validate-component",
+	className: "rv-validate-component",
 };
