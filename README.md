@@ -2,6 +2,9 @@
 
 ***WARNING: Still Under Construction***
 ------------------------
+## This project is awaiting for [this issue](https://github.com/facebook/react/issues/2127) to be solved properly before continuing work - it is functional at a very basic level at the moment but not recommended for production use yet *at all*
+
+### The reason being is that I think polluting your page structure with extra `<divs>` for the sake of validation is not the best, and can cause unexpected or frustrating behaviour, mostly in relation to styling
 
 ![that's a tick, not some blades of grass XD](https://raw.github.com/lostpebble/react-validate/master/gh-pages/logo_small.png?raw=true "Koa MobX React Goodness")
 
