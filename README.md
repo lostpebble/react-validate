@@ -1,10 +1,15 @@
 ### [Examples in action and help getting started here](https://lostpebble.github.io/react-validate/)
 
-***WARNING: Still Under Construction***
-------------------------
-## This project is awaiting for [this issue](https://github.com/facebook/react/issues/2127) to be solved properly before continuing work - it is functional at a very basic level at the moment but not recommended for production use yet *at all*
+***WARNING: Please see first***
+---
 
-### The reason being is that I think polluting your page structure with extra `<divs>` for the sake of validation is not the best, and can cause unexpected or frustrating behaviour, mostly in relation to styling
+I'm most likely discontinuing work this library with the arrival and surging growth of the pretty amazing Formik library which pretty much covers what I was trying to do here and more:
+
+https://github.com/jaredpalmer/formik
+
+If there is a case where you see this library offering something different, please write an issue and perhaps I'd consider pulling out that functionality to create something more focused towards that.
+
+On the other hand, I'm also happy to hand the project over to someone who feels like they can offer something different to Formik when it comes to React and Validation.
 
 ![that's a tick, not some blades of grass XD](https://raw.github.com/lostpebble/react-validate/master/gh-pages/logo_small.png?raw=true "Koa MobX React Goodness")
 
