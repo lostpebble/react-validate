@@ -3,7 +3,7 @@
 ***WARNING: Please see first***
 ---
 
-I'm most likely discontinuing work this library with the arrival and surging growth of the pretty amazing Formik library which pretty much covers what I was trying to do here and more:
+I'm most likely discontinuing work on this library with the arrival and surging growth of the pretty amazing Formik library which pretty much covers what I was trying to do here and more:
 
 https://github.com/jaredpalmer/formik
 
