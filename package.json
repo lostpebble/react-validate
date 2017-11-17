@@ -18,7 +18,10 @@
     "build-ghp": "rimraf gh-pages && cross-env NODE_ENV=production webpack --config ./example/webpack.config.js",
     "start": "cross-env BABEL_ENV=dev nodemon example/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+		"cut-patch-release": "npm version patch && git push --follow-tags && npm publish",
+		"cut-minor-release": "npm version minor && git push --follow-tags && npm publish",
+		"cut-major-release": "npm version major && git push --follow-tags && npm publish"
   },
   "repository": {
     "type": "git",
@@ -35,7 +38,9 @@
   },
   "homepage": "https://github.com/lostpebble/react-validate#readme",
   "peerDependencies": {
-    "react": "^16.1.0"
+    "react": "^16.1.0",
+		"react-dom": "^16.1.0",
+		"proptypes": "^1.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.1",
@@ -66,9 +71,10 @@
     "html-loader": "^0.4.4",
     "image-webpack-loader": "^3.0.0",
     "markdown-loader": "^0.1.7",
-    "material-ui": "^0.16.1",
+    "material-ui": "^0.19.4",
     "node-sass": "^3.10.1",
     "nodemon": "^1.11.0",
+		"proptypes": "^1.1.0",
     "postcss-loader": "^1.1.0",
 		"react": "^16.1.1",
     "react-dom": "^16.1.1",

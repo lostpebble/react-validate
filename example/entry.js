@@ -1,16 +1,16 @@
-import React from 'react';
-import { render } from 'react-dom';
+import React from "react";
+import { render } from "react-dom";
 
-import App from './src/App';
+import App from "./src/App";
 
 // needed for material-ui examples
-require('react-tap-event-plugin')();
+// require("react-tap-event-plugin")();
 
-require('./styles/styles.scss');
+require("./styles/styles.scss");
 
-render((<App/>), document.getElementById('react-mount'));
+render(<App />, document.getElementById("react-mount"));
+
 /*
-
 // This is required for hot reloading
 if (module.hot) {
 	module.hot.accept('./src/App.js', () => {

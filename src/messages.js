@@ -1,5 +1,5 @@
-export const validatorError = (value) =>
-	`	\<Validate\> A validator function failed to validate the value: ${value}
+export const validatorError = value =>
+  `	\<Validate\> A validator function failed to validate the value: ${value}
 			
 		Some potential causes:
 			

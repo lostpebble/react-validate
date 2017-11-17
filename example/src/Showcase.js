@@ -1,45 +1,44 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component } from "react";
+import PropTypes from "proptypes";
 
-import introMarkdown from './intro.md';
+import introMarkdown from "./intro.md";
 
-import SimpleExample from './examples/simple/SimpleExample';
-import simpleMarkdown from './examples/simple/README.md';
+import SimpleExample from "./examples/simple/SimpleExample";
+import simpleMarkdown from "./examples/simple/README.md";
 
-import SimpleExampleWithErrors from './examples/simpleWithErrors/SimpleWithErrorsExample';
-import simpleWithErrorsMarkdown from './examples/simpleWithErrors/README.md';
+import SimpleExampleWithErrors from "./examples/simpleWithErrors/SimpleWithErrorsExample";
+import simpleWithErrorsMarkdown from "./examples/simpleWithErrors/README.md";
 
 export default class Showcase extends Component {
-	render() {
-		// const validateLength = bind(validator.isLength, null, bind.placeholder, { min: 6 });
-		// const validateEquals = bind(validator.equals, null, bind.placeholder, "correct");
+  render() {
+    // const validateLength = bind(validator.isLength, null, bind.placeholder, { min: 6 });
+    // const validateEquals = bind(validator.equals, null, bind.placeholder, "correct");
 
-		return (
-			<div className="showcase">
-				<div className="showcase-row">
-					<div className="showcase-left" dangerouslySetInnerHTML={{ __html: introMarkdown }}></div>
-					<div className="showcase-right">
-
-					</div>
-				</div>
-				<div className="showcase-row">
-					<div className="showcase-left" dangerouslySetInnerHTML={{ __html: simpleMarkdown }}></div>
-					<div className="showcase-right">
-						<SimpleExample/>
-					</div>
-				</div>
+    return (
+      <div className="showcase">
         <div className="showcase-row">
-          <div className="showcase-left" dangerouslySetInnerHTML={{ __html: simpleWithErrorsMarkdown }}></div>
+          <div className="showcase-left" dangerouslySetInnerHTML={{ __html: introMarkdown }} />
+          <div className="showcase-right" />
+        </div>
+        <div className="showcase-row">
+          <div className="showcase-left" dangerouslySetInnerHTML={{ __html: simpleMarkdown }} />
           <div className="showcase-right">
-            <SimpleExampleWithErrors/>
+            <SimpleExample />
           </div>
         </div>
-				<div className="showcase-row">
-					<div className="showcase-left"></div>
-					<div className="showcase-right"></div>
-				</div>
-			</div>
-		);
-	}
+        <div className="showcase-row">
+          <div className="showcase-left" dangerouslySetInnerHTML={{ __html: simpleWithErrorsMarkdown }} />
+          <div className="showcase-right">
+            <SimpleExampleWithErrors />
+          </div>
+        </div>
+        <div className="showcase-row">
+          <div className="showcase-left" />
+          <div className="showcase-right" />
+        </div>
+      </div>
+    );
+  }
 }
 
 /*
