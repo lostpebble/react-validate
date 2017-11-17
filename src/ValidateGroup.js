@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from "proptypes";
+import PropTypes from "prop-types";
 import Validate from "./Validate";
 
 import uniqueId from "lodash/uniqueId";
